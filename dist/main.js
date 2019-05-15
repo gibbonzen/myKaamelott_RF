@@ -7,6 +7,7 @@ const door_node_1 = require("./door_module/door-node");
 const radio_event_1 = require("./common/event/radio-event");
 const uint8_t_1 = require("./tools/uint8_t");
 const bird_table_node_1 = require("./bird-table_module/bird-table-node");
+const open_command_1 = require("./door_module/open-command");
 class Main {
     constructor(parameters) {
         logger_1.Logger.log("Start program", this, logger_1.Color.FG_RED);
@@ -27,8 +28,8 @@ class Main {
         this.runDoorSimulation();
     }
     runDoorSimulation() {
-        let data = this.getData();
-        let event = new radio_event_1.RadioEvent(this.masterNode, this.doorNode, data);
+        let command = new open_command_1.OpenCommand();
+        let event = new radio_event_1.RadioEvent(this.masterNode, this.doorNode, command);
         this.masterNode.emitOnRadio(event);
     }
     getData() {

@@ -5,6 +5,9 @@ import { DoorNode } from "./door_module/door-node";
 import { RadioEvent } from "./common/event/radio-event";
 import { uint8_t } from "./tools/uint8_t";
 import { BirdTableNode } from "./bird-table_module/bird-table-node";
+import { EventTools } from "./tools/event-tools";
+import { OpenCommand } from "./door_module/open-command";
+import { Command } from "./common/node/command";
 
 class Main {
     
@@ -40,11 +43,11 @@ class Main {
     }
 
     private runDoorSimulation(): void {
-        let data: uint8_t[] = this.getData()
-        let event: RadioEvent = new RadioEvent(this.masterNode, this.doorNode, data)
-
+        let command: Command = new OpenCommand()
+        let event: RadioEvent = new RadioEvent(this.masterNode, this.doorNode, command)
         this.masterNode.emitOnRadio(event)
 
+        
     }
 
     private getData(): uint8_t[] {
