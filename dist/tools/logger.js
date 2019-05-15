@@ -24,9 +24,9 @@ exports.Logger = Logger;
 var Color;
 (function (Color) {
     Color["RESET"] = "\u001B[0m";
-    Color["BRIGHT"] = "\u001B[1m";
+    Color["STRONG"] = "\u001B[1m";
     Color["DIM"] = "\u001B[2m";
-    Color["UNDERSCORE"] = "\u001B[4m";
+    Color["UNDERLINED"] = "\u001B[4m";
     Color["BLINK"] = "\u001B[5m";
     Color["REVERSE"] = "\u001B[7m";
     Color["HIDDEN"] = "\u001B[8m";

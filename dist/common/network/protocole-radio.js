@@ -9,7 +9,7 @@ class ProtocoleRadio {
         this.listeners.push(listener);
     }
     emit(event) {
-        logger_1.Logger.log(`Emitter ${event.emitter.ID} emit new message...`, this, logger_1.Color.FG_BLUE);
+        logger_1.Logger.log(`Emitter <${event.emitter.ID}> emit new message...`, this, logger_1.Color.FG_BLUE);
         this.listeners.forEach(l => l.onEvent(event));
     }
     onEvent() {

@@ -3,6 +3,6 @@ import { NetworkNode } from "../node/network-node";
 
 export class WifiEvent implements NetworkEvent {
     emitter: NetworkNode
-    msg: string;
-
+    receiver: NetworkNode;
+    data: any[];
 }
