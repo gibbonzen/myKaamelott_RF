@@ -4,8 +4,13 @@ import { RadioEvent } from "../common/event/radio-event";
 import { Logger, Color } from "../tools/logger";
 import { uint8_t } from "../tools/uint8_t";
 import { EventTools } from "../tools/event-tools";
+import { RadioCommand } from "../common/node/radio-command";
+import { CommandRunner } from "../common/command/command-runner";
+import { Command } from "../common/node/command";
+import { DoorCommandFactory } from "./door-commands";
+import { ClassTools } from "../tools/class-tools";
 
-export class DoorNode extends RadioReceiver implements NetworkNode {
+export class DoorNode extends RadioReceiver implements NetworkNode, CommandRunner {
     ID: uint8_t
     
     constructor(ID: number) {
@@ -16,16 +21,20 @@ export class DoorNode extends RadioReceiver implements NetworkNode {
     onRadioEvent(event: RadioEvent): void {
         Logger.log(`<Node n°${this.ID}> receive new event from <${event.emitter.ID}>.`, this, Color.FG_CYAN)
         
-        let data = EventTools.radioDecode(event.data)
-        Logger.log('  Data: {')
-        Logger.log(`    "emitter": ${data.emitter},`)
-        Logger.log(`    "receiver": ${data.receiver},`)
-        Logger.log('    "command": {')
-        Logger.log(`      "ID": ${data.command.ID},`)
-        Logger.log(`      "value": [${data.command.value}]`)
-        Logger.log('    }')
-        Logger.log('  }')
+        let command: RadioCommand = EventTools.extractCommand(event, new DoorCommandFactory())
+        if(this.isRunnable(command)) {
+            Logger.log(`Command [${ClassTools.getObjectClass(command)}] is runnable...`, this)
+        }
+        else Logger.log(`Unknown command`, this)
         
+    }
+
+    isRunnable(command: Command): boolean {
+        return command !== undefined
+    }
+    
+    run(command: Command): void {
+        throw new Error("Method not implemented.");
     }
 
 }

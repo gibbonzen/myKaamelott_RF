@@ -4,6 +4,8 @@ const radio_receiver_1 = require("../common/receiver/radio-receiver");
 const logger_1 = require("../tools/logger");
 const uint8_t_1 = require("../tools/uint8_t");
 const event_tools_1 = require("../tools/event-tools");
+const door_commands_1 = require("./door-commands");
+const class_tools_1 = require("../tools/class-tools");
 class DoorNode extends radio_receiver_1.RadioReceiver {
     constructor(ID) {
         super();
@@ -11,15 +13,18 @@ class DoorNode extends radio_receiver_1.RadioReceiver {
     }
     onRadioEvent(event) {
         logger_1.Logger.log(`<Node n°${this.ID}> receive new event from <${event.emitter.ID}>.`, this, logger_1.Color.FG_CYAN);
-        let data = event_tools_1.EventTools.radioDecode(event.data);
-        logger_1.Logger.log('  Data: {');
-        logger_1.Logger.log(`    "emitter": ${data.emitter},`);
-        logger_1.Logger.log(`    "receiver": ${data.receiver},`);
-        logger_1.Logger.log('    "command": {');
-        logger_1.Logger.log(`      "ID": ${data.command.ID},`);
-        logger_1.Logger.log(`      "value": [${data.command.value}]`);
-        logger_1.Logger.log('    }');
-        logger_1.Logger.log('  }');
+        let command = event_tools_1.EventTools.extractCommand(event, new door_commands_1.DoorCommandFactory());
+        if (this.isRunnable(command)) {
+            logger_1.Logger.log(`Command [${class_tools_1.ClassTools.getObjectClass(command)}] is runnable...`, this);
+        }
+        else
+            logger_1.Logger.log(`Unknown command`, this);
+    }
+    isRunnable(command) {
+        return command !== undefined;
+    }
+    run(command) {
+        throw new Error("Method not implemented.");
     }
 }
 exports.DoorNode = DoorNode;

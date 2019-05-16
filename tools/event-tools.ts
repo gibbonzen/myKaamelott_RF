@@ -2,6 +2,8 @@ import { NetworkEvent } from "../common/event/network-event";
 import { NetworkNode } from "../common/node/network-node";
 import { uint8_t } from "./uint8_t";
 import { RadioCommand } from "../common/node/radio-command";
+import { RadioEvent } from "../common/event/radio-event";
+import { CommandFactory } from "../common/command/command-factory";
 
 export class EventTools {
 
@@ -40,6 +42,10 @@ export class EventTools {
         Array.prototype.push.apply(data, command.value)
 
         return data
+    }
+
+    static extractCommand(event: RadioEvent, factory: CommandFactory): RadioCommand {
+        return factory.create(EventTools.radioDecode(event.data))
     }
 
 }

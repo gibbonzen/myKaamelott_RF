@@ -8,6 +8,7 @@ const radio_event_1 = require("./common/event/radio-event");
 const uint8_t_1 = require("./tools/uint8_t");
 const bird_table_node_1 = require("./bird-table_module/bird-table-node");
 const open_command_1 = require("./door_module/open-command");
+const close_command_1 = require("./door_module/close-command");
 class Main {
     constructor(parameters) {
         logger_1.Logger.log("Start program", this, logger_1.Color.FG_RED);
@@ -29,8 +30,11 @@ class Main {
     }
     runDoorSimulation() {
         let command = new open_command_1.OpenCommand();
-        let event = new radio_event_1.RadioEvent(this.masterNode, this.doorNode, command);
+        //let event: RadioEvent = new RadioEvent(this.masterNode, this.doorNode, command)
+        let event = new radio_event_1.RadioEvent(this.masterNode, this.birdTableNode, command);
         this.masterNode.emitOnRadio(event);
+        let sendFalseEvent = () => this.masterNode.emitOnRadio(new radio_event_1.RadioEvent(this.masterNode, this.doorNode, new close_command_1.CloseCommand()));
+        this.delay(5000, sendFalseEvent);
     }
     getData() {
         let data = [];
@@ -38,6 +42,11 @@ class Main {
             data.push(new uint8_t_1.uint8_t(i));
         }
         return data;
+    }
+    delay(millis, next) {
+        setTimeout(() => {
+            next();
+        }, millis);
     }
 }
 new Main([]);

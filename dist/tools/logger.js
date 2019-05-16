@@ -1,23 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+const class_tools_1 = require("./class-tools");
 class Logger {
     static log(msg, clazz, color = Color.FG_DEFAULT) {
         if (clazz)
-            msg = `[${this.getObjectClass(clazz)}]: ${msg}`;
+            msg = `[${class_tools_1.ClassTools.getObjectClass(clazz)}]: ${msg}`;
         this.print(msg, color);
     }
     static print(msg, color) {
         console.log(`${color}%s${Color.RESET}`, msg);
-    }
-    static getObjectClass(obj) {
-        let objToStr = obj.toString();
-        let isClazzObject = /class ([a-zA-Z]*) {.*/gi.exec(objToStr);
-        if (isClazzObject !== null && [1] !== null)
-            return isClazzObject[1];
-        let isInstanceOf = /class ([a-zA-Z]*)/gi.exec(obj.constructor.toString());
-        if (isInstanceOf !== null && [1] !== null)
-            return isInstanceOf[1];
-        return undefined;
     }
 }
 exports.Logger = Logger;

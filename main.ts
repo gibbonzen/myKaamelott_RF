@@ -8,6 +8,7 @@ import { BirdTableNode } from "./bird-table_module/bird-table-node";
 import { EventTools } from "./tools/event-tools";
 import { OpenCommand } from "./door_module/open-command";
 import { Command } from "./common/node/command";
+import { CloseCommand } from "./door_module/close-command";
 
 class Main {
     
@@ -44,9 +45,12 @@ class Main {
 
     private runDoorSimulation(): void {
         let command: Command = new OpenCommand()
-        let event: RadioEvent = new RadioEvent(this.masterNode, this.doorNode, command)
+        //let event: RadioEvent = new RadioEvent(this.masterNode, this.doorNode, command)
+        let event: RadioEvent = new RadioEvent(this.masterNode, this.birdTableNode, command)
         this.masterNode.emitOnRadio(event)
 
+        let sendFalseEvent = () => this.masterNode.emitOnRadio(new RadioEvent(this.masterNode, this.doorNode, new CloseCommand()))
+        this.delay(5000, sendFalseEvent)
         
     }
 
@@ -58,6 +62,11 @@ class Main {
         return data
     }
 
+    private delay(millis: number, next) {
+        setTimeout(() => {
+            next()
+        }, millis);
+    }
 }
 
 new Main([])

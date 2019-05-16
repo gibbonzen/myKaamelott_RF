@@ -31,6 +31,9 @@ class EventTools {
         Array.prototype.push.apply(data, command.value);
         return data;
     }
+    static extractCommand(event, factory) {
+        return factory.create(EventTools.radioDecode(event.data));
+    }
 }
 exports.EventTools = EventTools;
 //# sourceMappingURL=event-tools.js.map
