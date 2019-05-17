@@ -1,1 +1,1 @@
-{"version":3,"file":"feed-command.js","sourceRoot":"","sources":["../../bird-table_module/feed-command.ts"],"names":[],"mappings":";;AAAA,gEAA4D;AAC5D,8CAA2C;AAE3C,MAAa,WAAY,SAAQ,4BAAY;IAEzC;QACI,KAAK,CAAC,IAAI,iBAAO,CAAC,CAAC,CAAC,EAAE,EAAE,CAAC,CAAA;IAC7B,CAAC;CACJ;AALD,kCAKC"}
+{"version":3,"file":"feed-command.js","sourceRoot":"","sources":["../../bird-table_module/feed-command.ts"],"names":[],"mappings":";;AAAA,gEAA2E;AAC3E,8CAA2C;AAE3C,MAAa,WAAY,SAAQ,4BAAY;IAEzC;QACI,KAAK,CAAC,IAAI,iBAAO,CAAC,6BAAa,CAAC,IAAI,CAAC,EAAE,EAAE,CAAC,CAAA;IAC9C,CAAC;CACJ;AALD,kCAKC"}
