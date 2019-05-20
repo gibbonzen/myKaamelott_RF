@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-class RadioController {
+class WifiController {
     onEvent(event) {
-        this.onRadioEvent(event);
+        this.onWifiEvent(event);
     }
-    setRadioNetwork(network) {
+    setWifiNetwork(network) {
         this.network = network;
         this.network.subscribe(this);
     }
@@ -12,5 +12,5 @@ class RadioController {
         this.network.emit(event);
     }
 }
-exports.RadioController = RadioController;
-//# sourceMappingURL=radio-controller.js.map
+exports.WifiController = WifiController;
+//# sourceMappingURL=wifi-controller.js.map

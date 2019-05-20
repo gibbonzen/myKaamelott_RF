@@ -10,9 +10,13 @@ import { OpenCommand } from "./door_module/open-command";
 import { Command } from "./common/node/command";
 import { CloseCommand } from "./door_module/close-command";
 import { FeedCommand } from "./bird-table_module/feed-command";
+import { ProtocoleWifi } from "./common/network/protocole-wifi";
+import { WifiEvent } from "./common/event/wifi-event";
+import { NetworkNode } from "./common/node/network-node";
 
 class Main {
     
+    private wifiNet: ProtocoleWifi
     private radioNet: ProtocoleRadio
     private masterNode: MasterNode
     private doorNode: DoorNode
@@ -25,10 +29,14 @@ class Main {
         // Create radio networking
         this.radioNet = new ProtocoleRadio()
         
+        // Create wifi networking
+        this.wifiNet = new ProtocoleWifi()
+
         // Init nodes
         // Create master module
         this.masterNode = new MasterNode(0b0000)
         this.masterNode.setRadioNetwork(this.radioNet)
+        this.masterNode.setWifiNetwork(this.wifiNet)
         
         // Create Door module
         this.doorNode = new DoorNode(0b0001)
@@ -40,7 +48,11 @@ class Main {
         
         
         // Simulation
-        this.runDoorSimulation()
+        // Door sim
+//        this.runDoorSimulation()
+
+        // Wifi emul
+        this.runWifiSimulation()
         
     }
 
@@ -54,7 +66,6 @@ class Main {
 
         sendEvent = () => this.masterNode.emitOnRadio(new RadioEvent(this.masterNode, this.birdTableNode, new FeedCommand()))
         this.delay(5000, sendEvent)
-        
     }
 
     private getData(): uint8_t[] {
@@ -63,6 +74,13 @@ class Main {
             data.push(new uint8_t(i))
         }
         return data
+    }
+
+    private runWifiSimulation() {
+        let home: NetworkNode = {
+            ID: new uint8_t(255)
+        }
+        this.wifiNet.emit(new WifiEvent(home, this.doorNode, [new CloseCommand()]))
     }
 
     private delay(millis: number, next) {

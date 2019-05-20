@@ -3,6 +3,7 @@ import { uint8_t } from "../../tools/uint8_t";
 import { NetworkNode } from "../node/network-node";
 import { RadioCommand } from "../node/radio-command";
 import { EventTools } from "../../tools/event-tools";
+import { emit } from "cluster";
 
 export class RadioEvent implements NetworkEvent {
     emitter: NetworkNode
@@ -12,7 +13,7 @@ export class RadioEvent implements NetworkEvent {
     constructor(emitter: NetworkNode, receiver: NetworkNode, command: RadioCommand) {
         this.emitter = emitter
         this.receiver = receiver
-        
         this.data = EventTools.radioEncode(this.emitter.ID, this.receiver.ID, command)
     }
+
 }

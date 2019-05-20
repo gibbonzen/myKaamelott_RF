@@ -8,7 +8,7 @@ export class ProtocoleRadio implements Emitter, Receiver {
     
     constructor() {}
     
-    listen(listener: Receiver): void {
+    subscribe(listener: Receiver): void {
         this.listeners.push(listener)
     }
     

@@ -1,18 +1,19 @@
 import { Receiver } from "../receiver/receiver";
 import { Emitter } from "../emitter/emitter";
-import { ProtocoleRadio } from "./protocole-radio";
-import { RadioEvent } from "../event/radio-event";
 import { NetworkEvent } from "../event/network-event";
-export abstract class RadioController implements Emitter, Receiver {
-    network: ProtocoleRadio
+import { ProtocoleWifi } from "./protocole-wifi";
+import { WifiEvent } from "../event/wifi-event";
+
+export abstract class WifiController implements Emitter, Receiver {
+    network: ProtocoleWifi
     
     onEvent(event: NetworkEvent): void {
-        this.onRadioEvent(event)
+        this.onWifiEvent(event)
     }
     
-    abstract onRadioEvent(event: RadioEvent): void
+    abstract onWifiEvent(event: WifiEvent): void
     
-    setRadioNetwork(network: ProtocoleRadio): void {
+    setWifiNetwork(network: ProtocoleWifi): void {
         this.network = network
         this.network.subscribe(this)
     }

@@ -10,16 +10,21 @@ const bird_table_node_1 = require("./bird-table_module/bird-table-node");
 const open_command_1 = require("./door_module/open-command");
 const close_command_1 = require("./door_module/close-command");
 const feed_command_1 = require("./bird-table_module/feed-command");
+const protocole_wifi_1 = require("./common/network/protocole-wifi");
+const wifi_event_1 = require("./common/event/wifi-event");
 class Main {
     constructor(parameters) {
         logger_1.Logger.log("Start program", this, logger_1.Color.FG_RED);
         // Init network
         // Create radio networking
         this.radioNet = new protocole_radio_1.ProtocoleRadio();
+        // Create wifi networking
+        this.wifiNet = new protocole_wifi_1.ProtocoleWifi();
         // Init nodes
         // Create master module
         this.masterNode = new master_node_1.MasterNode(0b0000);
         this.masterNode.setRadioNetwork(this.radioNet);
+        this.masterNode.setWifiNetwork(this.wifiNet);
         // Create Door module
         this.doorNode = new door_node_1.DoorNode(0b0001);
         this.doorNode.setRadioNetwork(this.radioNet);
@@ -27,7 +32,10 @@ class Main {
         this.birdTableNode = new bird_table_node_1.BirdTableNode(0b0010);
         this.birdTableNode.setRadioNetwork(this.radioNet);
         // Simulation
-        this.runDoorSimulation();
+        // Door sim
+        //        this.runDoorSimulation()
+        // Wifi emul
+        this.runWifiSimulation();
     }
     runDoorSimulation() {
         let command = new open_command_1.OpenCommand();
@@ -44,6 +52,13 @@ class Main {
             data.push(new uint8_t_1.uint8_t(i));
         }
         return data;
+    }
+    runWifiSimulation() {
+        let home = {
+            ID: new uint8_t_1.uint8_t(255)
+        };
+        this.masterNode.emitOnWifi(new wifi_event_1.WifiEvent(this.masterNode, home, []));
+        this.wifiNet.emit(new wifi_event_1.WifiEvent(home, this.doorNode, [new close_command_1.CloseCommand()]));
     }
     delay(millis, next) {
         setTimeout(() => {

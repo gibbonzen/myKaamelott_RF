@@ -3,7 +3,6 @@ import { RadioEvent } from "../event/radio-event";
 import { NetworkEvent } from "../event/network-event";
 import { ProtocoleRadio } from "../network/protocole-radio";
 import { NetworkNode } from "../node/network-node";
-import { emit } from "cluster";
 import { uint8_t } from "../../tools/uint8_t";
 import { EventTools } from "../../tools/event-tools";
 
@@ -20,7 +19,7 @@ export abstract class RadioReceiver implements Receiver, NetworkNode {
 
     setRadioNetwork(network: ProtocoleRadio): void {
         this.network = network
-        this.network.listen(this)
+        this.network.subscribe(this)
     }
 
 }

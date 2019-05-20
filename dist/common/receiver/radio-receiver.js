@@ -9,7 +9,7 @@ class RadioReceiver {
     }
     setRadioNetwork(network) {
         this.network = network;
-        this.network.listen(this);
+        this.network.subscribe(this);
     }
 }
 exports.RadioReceiver = RadioReceiver;

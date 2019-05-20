@@ -5,7 +5,7 @@ class ProtocoleRadio {
     constructor() {
         this.listeners = [];
     }
-    listen(listener) {
+    subscribe(listener) {
         this.listeners.push(listener);
     }
     emit(event) {
