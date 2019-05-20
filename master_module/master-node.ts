@@ -40,11 +40,9 @@ export class MasterNode extends NetworkAdapter implements NetworkNode {
     }
 
     translateEvent(event: WifiEvent): RadioEvent[] {
-        let events: RadioEvent[] = []
-        events = event.data
+        return event.data
             .filter(d => d instanceof RadioCommand)
             .map(c => new RadioEvent(this, event.receiver, c))
-        return events
     }
 
 }

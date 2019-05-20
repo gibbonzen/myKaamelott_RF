@@ -12,6 +12,8 @@ const close_command_1 = require("./door_module/close-command");
 const feed_command_1 = require("./bird-table_module/feed-command");
 const protocole_wifi_1 = require("./common/network/protocole-wifi");
 const wifi_event_1 = require("./common/event/wifi-event");
+const door_safe_node_1 = require("./door-safe_module/door-safe-node");
+const other_tools_1 = require("./tools/other-tools");
 class Main {
     constructor(parameters) {
         logger_1.Logger.log("Start program", this, logger_1.Color.FG_RED);
@@ -31,20 +33,25 @@ class Main {
         // Create bird table
         this.birdTableNode = new bird_table_node_1.BirdTableNode(0b0010);
         this.birdTableNode.setRadioNetwork(this.radioNet);
+        // Create door safe module
+        this.doorSafe = new door_safe_node_1.DoorSafeNode(0b0011);
+        this.doorSafe.setRadioNetwork(this.radioNet);
         // Simulation
         // Door sim
         //        this.runDoorSimulation()
         // Wifi emul
         this.runWifiSimulation();
+        // Door safe simulation
+        this.runDoorSafeSimulation();
     }
     runDoorSimulation() {
         let command = new open_command_1.OpenCommand();
         let event = new radio_event_1.RadioEvent(this.masterNode, this.birdTableNode, command);
         this.masterNode.emitOnRadio(event);
         let sendEvent = () => this.masterNode.emitOnRadio(new radio_event_1.RadioEvent(this.masterNode, this.doorNode, new close_command_1.CloseCommand()));
-        this.delay(5000, sendEvent);
+        other_tools_1.OtherTools.delay(5000, sendEvent);
         sendEvent = () => this.masterNode.emitOnRadio(new radio_event_1.RadioEvent(this.masterNode, this.birdTableNode, new feed_command_1.FeedCommand()));
-        this.delay(5000, sendEvent);
+        other_tools_1.OtherTools.delay(5000, sendEvent);
     }
     getData() {
         let data = [];
@@ -57,13 +64,13 @@ class Main {
         let home = {
             ID: new uint8_t_1.uint8_t(255)
         };
-        this.masterNode.emitOnWifi(new wifi_event_1.WifiEvent(this.masterNode, home, []));
         this.wifiNet.emit(new wifi_event_1.WifiEvent(home, this.doorNode, [new close_command_1.CloseCommand()]));
     }
-    delay(millis, next) {
-        setTimeout(() => {
-            next();
-        }, millis);
+    runDoorSafeSimulation() {
+        this.doorSafe.emit(new radio_event_1.RadioEvent(this.doorSafe, this.masterNode, {
+            ID: this.doorSafe.ID,
+            value: [new uint8_t_1.uint8_t(5)]
+        }));
     }
 }
 new Main([]);

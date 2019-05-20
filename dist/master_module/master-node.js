@@ -33,11 +33,9 @@ class MasterNode extends network_adapter_1.NetworkAdapter {
         this.emit(event);
     }
     translateEvent(event) {
-        let events = [];
-        events = event.data
+        return event.data
             .filter(d => d instanceof radio_command_1.RadioCommand)
             .map(c => new radio_event_1.RadioEvent(this, event.receiver, c));
-        return events;
     }
 }
 exports.MasterNode = MasterNode;

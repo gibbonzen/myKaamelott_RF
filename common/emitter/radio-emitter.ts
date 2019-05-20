@@ -1,7 +1,18 @@
 import { Emitter } from "./emitter";
-import { RadioReceiver } from "../receiver/radio-receiver";
+import { uint8_t } from "../../tools/uint8_t";
+import { ProtocoleRadio } from "../network/protocole-radio";
+import { RadioEvent } from "../event/radio-event";
 
 export abstract class RadioEmitter implements Emitter {
-    abstract subscribe: (listener: RadioReceiver) => void
-    abstract emit: () => void
+    ID: uint8_t
+    network: ProtocoleRadio
+
+    setRadioNetwork(network: ProtocoleRadio): void {
+        this.network = network
+    }
+    
+    emit(event: RadioEvent) {
+        this.network.emit(event)
+    }
+
 }
