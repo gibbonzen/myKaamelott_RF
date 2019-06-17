@@ -1,0 +1,13 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "typescript",
+            "tsconfig": "../../../../../../../c:/Users/L0510125/home/explore/typescript/clock/tsconfig.json",
+            "problemMatcher": [
+                "$tsc"
+            ]
+        }
+    ]
+}
