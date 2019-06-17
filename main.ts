@@ -1,5 +1,6 @@
-import { Clock } from "./librairy/Clock/Clock";
-import { CronTask } from "./librairy/CronTask/CronTask";
+import { Clock } from "./library/Clock/Clock";
+import { CronTask } from "./library/CronTask/CronTask";
+
 
 const clock = new Clock("16:00:00")
 let lastClock = clock.getTime()
