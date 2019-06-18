@@ -12,7 +12,6 @@
                 "main.cpp",
                 "lib/Counter/Counter.cpp",
                 "lib/TimerUtils/TimerUtils.cpp",
-                "lib/TimerUtils/Time.h",
                 "lib/Clock/Clock.cpp",
             ],
             "group": {

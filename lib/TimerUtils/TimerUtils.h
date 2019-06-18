@@ -4,8 +4,8 @@
 class TimerUtils {
   public:
     enum Unit { HOUR, MINUTE, SECOND, MILLISECOND };
-    unsigned long long superMillis();
-    long convert(int time, Unit from, Unit to);
+    static unsigned long long superMillis();
+    static long convert(int time, Unit from, Unit to);
 };
 
 #endif
