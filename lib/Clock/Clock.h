@@ -5,13 +5,14 @@
 
 class Clock {
     public:
-        Clock(int* time);
-        void setTime(int* time);
+        Clock();
+        Clock(int time[3]);
+        void setTime(int time[3]);
         long getTime();
+        void process();
+        void toString();
 
     private:
-        void process();
-
         int _hCount;
         int _mCount;
         int _sCount;

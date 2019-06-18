@@ -1,8 +1,18 @@
+#include <iostream>
+
 #include "Clock.h"
 
 #include "../TimerUtils/TimerUtils.h"
 
-Clock::Clock(int* time) {
+using namespace std;
+
+Clock::Clock() {
+    _hCount = 0;
+    _mCount = 0;
+    _sCount = 0;
+}
+
+Clock::Clock(int time[3]) {
     Clock::setTime(time);
 }
 
@@ -38,4 +48,8 @@ void Clock::process() {
     if(_hCount >= 24) { // one day
         _hCount = 0;
     }
+}
+
+void Clock::toString() {
+    cout << _hCount << ':' << _mCount << ':' << _sCount << endl;
 }

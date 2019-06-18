@@ -10,11 +10,11 @@ int time[3];
 Clock clock(time);
 
 void loop() {
-  Counter::increment(); // increment counter each ms
-//  cout << Counter::millis() << endl;
+  // Increment counters
+  Counter::increment();
+  clock.process();
 
   cout << clock.getTime() << endl;
-
 
 }
 
