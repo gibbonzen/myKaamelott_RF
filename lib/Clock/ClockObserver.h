@@ -9,14 +9,14 @@ class ClockObserver {
     void at(int const& hour, int const& min, int const&sec, void (*func)());
     void start();
     void stop();
+    void handle();
     ~ClockObserver();
 
   private:
-    void listen();
-    int _hour;
-    int _min;
-    int _sec;
+    long _time;
     bool _isStarted;
+    bool _isHandled;
+    unsigned long _handledAt;
     Clock *_clock;
     void (*_func)();
 };

@@ -22,22 +22,16 @@ void loop() {
   }
 
 
-
 }
 
 void display() {
   cout << "test" << endl;
 }
 
-int main(int argc, char* argv[])
-{
-  ClockObserver openAt(&clock); // Open at 08:00 AM
-
-  // void (*func)();
-  // func = display;
-
-  openAt.at(17, 0, 5, display);
-  // openAt.start();
+int main(int argc, char* argv[]) {
+  //ClockObserver openAt(&clock); // Open at 08:00 AM
+  //openAt.at(17, 0, 5, display);
+  //openAt.start();
 
   while(true) {
     loop();

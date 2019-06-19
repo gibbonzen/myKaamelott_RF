@@ -4,6 +4,7 @@
 #include "Clock.h"
 
 #include "../TimerUtils/TimerUtils.h"
+#include "../Clock/ClockObserver.h"
 
 using namespace std;
 
@@ -44,6 +45,10 @@ void Clock::process() {
     if(_hCount >= 24) { // one day
         _hCount = 0;
     }
+}
+
+void Clock::attach(void (ClockObserver::*handle)()) {
+    handle();
 }
 
 void Clock::toString() {

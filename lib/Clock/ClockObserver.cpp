@@ -1,8 +1,16 @@
 #include "ClockObserver.h"
 #include "Clock.h"
 
+#include <iostream>
+
+using namespace std;
+
 ClockObserver::ClockObserver(Clock *clock) {
   _clock = clock;
+  _isHandled = false;
+  _handledAt = 0;
+
+  _clock->attach(*this->handle);
 }
 
 ClockObserver::~ClockObserver() {
@@ -10,9 +18,7 @@ ClockObserver::~ClockObserver() {
 }
 
 void ClockObserver::at(int const& hour, int const& min, int const&sec, void (*func)()) {
-  _hour = hour;
-  _min = min;
-  _sec = sec;
+  _time = TimerUtils::convert(hour, TimerUtils::HOUR) + TimerUtils::convert(min, TimerUtils::MINUTE) +  TimerUtils::convert(sec, TimerUtils::SECOND);
   _func = func;
 }
 
@@ -24,9 +30,25 @@ void ClockObserver::stop() {
   _isStarted = false;
 }
 
-void ClockObserver::listen() {
+void ClockObserver::handle() {
+  cout << "handle" << endl;
+
   // Stopped
   if(!_isStarted) return;
 
-  _func();
+  if(_isHandled && _handledAt + 1000 >= _clock->getTime()) {
+    
+  }
+  else {
+    _isHandled = false;
+    _handledAt = 0;
+  }
+  
+
+  if(!_isHandled && _time == _clock->getTime()) {
+    _handledAt = _clock->getTime(); 
+    _isHandled = true;
+    _func();
+  }
+
 }
