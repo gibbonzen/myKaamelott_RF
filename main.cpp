@@ -6,25 +6,25 @@
 
 using namespace std;
 
-int time[3];
-Clock clock(time);
+Clock clock(17, 0, 0);
+
+long lastTime = clock.getTime();
 
 void loop() {
   // Increment counters
   Counter::increment();
   clock.process();
 
-  cout << clock.getTime() << endl;
+  if(lastTime != clock.getTime()) { // each 1 sec 
+    lastTime = clock.getTime();
+     //clock.toString();
+  }
+
 
 }
 
 int main(int argc, char* argv[])
 {
-  time[0] = 17;
-  time[1] = 0;
-  time[2] = 0;
-
-  clock.setTime(time);
 
   while(true) {
     loop();

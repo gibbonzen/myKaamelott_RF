@@ -34,27 +34,33 @@ long TimerUtils::convert(int time, Unit from, Unit to) {
   int multiplicator = SIMPLE_MULTIPLICATOR;
   int direction = DOWN_CONVERT;
 
-  if(from == TimerUtils::HOUR) {
-      direction = DOWN_CONVERT;
-      if(to == TimerUtils::SECOND) multiplicator *= SIMPLE_MULTIPLICATOR * SIMPLE_MULTIPLICATOR; // 60 * 60
-      if(to == TimerUtils::MILLISECOND) multiplicator *= SIMPLE_MULTIPLICATOR * SIMPLE_MULTIPLICATOR * SEC_MILLIS_MULTIPLICATOR; // 60 * 60 * 1000
-  }
-  else if(from == TimerUtils::MINUTE) {
-      if(to == TimerUtils::HOUR) direction = UP_CONVERT;
-      if(to == TimerUtils::MILLISECOND) multiplicator *= SEC_MILLIS_MULTIPLICATOR; // 60 * 1000
-  }
-  else if(from == TimerUtils::SECOND) {
+  switch(from) {
+    case TimerUtils::HOUR: 
+      // MINUTE : h / 60
+      if(to == TimerUtils::SECOND) multiplicator *= SIMPLE_MULTIPLICATOR; // h / (60 * 60)
+      if(to == TimerUtils::MILLISECOND) multiplicator *= SIMPLE_MULTIPLICATOR * SEC_MILLIS_MULTIPLICATOR; // h / (60 * 60 * 1000)
+      break;
+
+    case TimerUtils::MINUTE: 
+      if(to == TimerUtils::HOUR) direction = UP_CONVERT; // m * 60
+      // SECOND : m / 60
+      if(to == TimerUtils::MILLISECOND) multiplicator *= SEC_MILLIS_MULTIPLICATOR; // m / (60 * 1000)
+      break;
+
+    case TimerUtils::SECOND:
       if(to == TimerUtils::HOUR) {
           direction = UP_CONVERT;
-          multiplicator *= SIMPLE_MULTIPLICATOR; // 60 * 60 
+          multiplicator *= SIMPLE_MULTIPLICATOR; // s * (60 * 60)
       }
-      if(to == TimerUtils::MILLISECOND) multiplicator = SEC_MILLIS_MULTIPLICATOR ;// 60 * 1000
-  }
-  else if(from == TimerUtils::MILLISECOND) {
+      // MINUTE : s * 60
+      if(to == TimerUtils::MILLISECOND) multiplicator = SEC_MILLIS_MULTIPLICATOR ; // s * (60 * 1000)
+      break;
+    case TimerUtils::MILLISECOND:
       direction = UP_CONVERT;
-      if(to == TimerUtils::SECOND) multiplicator = SEC_MILLIS_MULTIPLICATOR; // 1000
-      if(to == TimerUtils::MINUTE) multiplicator *= SEC_MILLIS_MULTIPLICATOR; // 60 * 1000
-      if(to == TimerUtils::HOUR) multiplicator *= SIMPLE_MULTIPLICATOR *SIMPLE_MULTIPLICATOR * SEC_MILLIS_MULTIPLICATOR; // 60 * 60 * 1000
+      if(to == TimerUtils::SECOND) multiplicator = SEC_MILLIS_MULTIPLICATOR; // ms * 1000
+      if(to == TimerUtils::MINUTE) multiplicator *= SEC_MILLIS_MULTIPLICATOR; // ms * (60 * 1000)
+      if(to == TimerUtils::HOUR) multiplicator *= SIMPLE_MULTIPLICATOR * SEC_MILLIS_MULTIPLICATOR; // ms * (60 * 60 * 1000)
+      break;
   }
 
   int result = time * multiplicator;

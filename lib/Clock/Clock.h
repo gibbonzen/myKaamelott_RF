@@ -5,10 +5,9 @@
 
 class Clock {
     public:
-        Clock();
-        Clock(int time[3]);
-        void setTime(int time[3]);
-        long getTime();
+        Clock(int h, int m, int s);
+        void setTime(int h, int m, int s);
+        long getTime(TimerUtils::Unit unit = TimerUtils::MILLISECOND);
         void process();
         void toString();
 

@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdio.h>
 
 #include "Clock.h"
 
@@ -6,26 +7,21 @@
 
 using namespace std;
 
-Clock::Clock() {
-    _hCount = 0;
-    _mCount = 0;
-    _sCount = 0;
+Clock::Clock(int h, int m, int s) {
+    Clock::setTime(h, m, s);
 }
 
-Clock::Clock(int time[3]) {
-    Clock::setTime(time);
+void Clock::setTime(int h, int m, int s) {
+    _hCount = h;
+    _mCount = m;
+    _sCount = s;
 }
 
-void Clock::setTime(int* time) {
-    _hCount = time[0];
-    _mCount = time[1];
-    _sCount = time[2];
-}
-
-long Clock::getTime() {
-  long hourSec = TimerUtils::convert(_hCount, TimerUtils::HOUR, TimerUtils::SECOND);
-  long minSec = TimerUtils::convert(_mCount, TimerUtils::MINUTE, TimerUtils::SECOND);
-  return hourSec + minSec + _sCount;
+long Clock::getTime(TimerUtils::Unit unit) {
+  long hour = TimerUtils::convert(_hCount, TimerUtils::HOUR, unit);
+  long min = TimerUtils::convert(_mCount, TimerUtils::MINUTE, unit);
+  long sec = TimerUtils::convert(_sCount, TimerUtils::SECOND, unit);
+  return hour + min + sec;
 }
 
 void Clock::process() {
@@ -51,5 +47,6 @@ void Clock::process() {
 }
 
 void Clock::toString() {
-    cout << _hCount << ':' << _mCount << ':' << _sCount << endl;
+    printf("%02i:%02i:%02i", _hCount, _mCount, _sCount);
+    cout << endl;
 }
