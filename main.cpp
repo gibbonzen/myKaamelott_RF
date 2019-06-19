@@ -3,6 +3,7 @@
 
 #include "lib/Counter/Counter.h"
 #include "lib/Clock/Clock.h"
+#include "lib/Clock/ClockObserver.h"
 
 using namespace std;
 
@@ -21,10 +22,22 @@ void loop() {
   }
 
 
+
+}
+
+void display() {
+  cout << "test" << endl;
 }
 
 int main(int argc, char* argv[])
 {
+  ClockObserver openAt(&clock); // Open at 08:00 AM
+
+  // void (*func)();
+  // func = display;
+
+  openAt.at(17, 0, 5, display);
+  // openAt.start();
 
   while(true) {
     loop();

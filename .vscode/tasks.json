@@ -13,6 +13,7 @@
                 "lib/Counter/Counter.cpp",
                 "lib/TimerUtils/TimerUtils.cpp",
                 "lib/Clock/Clock.cpp",
+                "lib/Clock/ClockObserver.cpp"
             ],
             "group": {
                 "kind": "build",
