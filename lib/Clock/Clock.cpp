@@ -2,9 +2,10 @@
 #include <stdio.h>
 
 #include "Clock.h"
-
 #include "../TimerUtils/TimerUtils.h"
-#include "../Clock/ClockObserver.h"
+#include <vector>
+
+#include "ClockObserver.h"
 
 using namespace std;
 
@@ -45,10 +46,20 @@ void Clock::process() {
     if(_hCount >= 24) { // one day
         _hCount = 0;
     }
+
+    handle();
 }
 
-void Clock::attach(void (ClockObserver::*handle)()) {
-    handle();
+void Clock::attach(ClockObserver *obs) {
+    // Add observer
+    _observers.push_back(obs);
+}
+
+void Clock::handle() {
+    for(int i = 0; i < _observers.size(); i++) {
+        ClockObserver *obs = _observers[i];
+        obs->handle(); // call observer handle method
+    }
 }
 
 void Clock::toString() {
