@@ -1,5 +1,6 @@
 #include "ClockObserver.h"
 #include "Clock.h"
+#include "../TimerUtils/TimerUtils.h"
 
 #include <iostream>
 
@@ -10,14 +11,14 @@ ClockObserver::ClockObserver(Clock *clock) {
   _isHandled = false;
   _handledAt = 0;
 
-  _clock->attach(*this->handle);
+  _clock->attach(this);
 }
 
 ClockObserver::~ClockObserver() {
   delete _clock;
 }
 
-void ClockObserver::at(int const& hour, int const& min, int const&sec, void (*func)()) {
+void ClockObserver::at(int const& hour, int const& min, int const& sec, void (*func)(void)) {
   _time = TimerUtils::convert(hour, TimerUtils::HOUR) + TimerUtils::convert(min, TimerUtils::MINUTE) +  TimerUtils::convert(sec, TimerUtils::SECOND);
   _func = func;
 }
@@ -31,8 +32,9 @@ void ClockObserver::stop() {
 }
 
 void ClockObserver::handle() {
-  cout << "handle" << endl;
-
+  int* hms = TimerUtils::toHMS(_clock->getTime());
+  cout << "Config time: " << hms[0] << ":" << hms[1] << ":" << hms[2] << endl;
+  
   // Stopped
   if(!_isStarted) return;
 

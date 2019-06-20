@@ -2,6 +2,9 @@
 
 #include "../Counter/Counter.h"
 
+#include <iostream>
+using namespace std;
+
 #define SIMPLE_MULTIPLICATOR 60
 #define SEC_MILLIS_MULTIPLICATOR 1000
 
@@ -30,7 +33,7 @@ unsigned long long TimerUtils::superMillis() {
   return finalMillis;
 }
 
-long TimerUtils::convert(int time, Unit from, Unit to) {
+long TimerUtils::convert(unsigned long time, Unit from, Unit to) {
   int multiplicator = SIMPLE_MULTIPLICATOR;
   int direction = DOWN_CONVERT;
 
@@ -66,4 +69,12 @@ long TimerUtils::convert(int time, Unit from, Unit to) {
   int result = time * multiplicator;
   if(direction == UP_CONVERT) result = time / multiplicator;
   return result;
+}
+
+int* toHMS(unsigned long time) {
+  int *hms = (int *) malloc(3 * sizeof(int));
+  hms[0] = time / 3600000;
+  hms[1] = (time % 3600000) / 60000;
+  hms[2] = ((time % 3600000) % 60000) / 1000;
+  return hms;
 }
