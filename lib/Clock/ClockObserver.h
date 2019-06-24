@@ -6,6 +6,8 @@
 class ClockObserver {
   public:
     ClockObserver(Clock *clock);
+    void setID(int id);
+    int getID();
     void at(int const& hour, int const& min, int const& sec, void (*func)(void));
     void start();
     void stop();
@@ -13,6 +15,7 @@ class ClockObserver {
     ~ClockObserver();
 
   private:
+    int _id;
     long _time;
     bool _isStarted;
     bool _isHandled;

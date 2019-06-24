@@ -5,11 +5,15 @@
 #include "lib/Clock/Clock.h"
 #include "lib/Clock/ClockObserver.h"
 
+#include "lib/Devices/Door/Door.h"
+
 using namespace std;
 
 Clock clock(8, 0, 0);
 
 long lastTime = clock.getTime();
+
+Door door(1);
 
 void loop() {
   // Increment counters
@@ -21,7 +25,7 @@ void loop() {
      clock.toString();
   }
 
-
+  
 }
 
 void display() {
@@ -39,9 +43,13 @@ int main(int argc, char* argv[]) {
   openAt.start();
 
   ClockObserver closeAt(&clock); // Close at 08:00:10
-  closeAt.at(8, 0, 5, reset);
+  closeAt.at(8, 0, 10, reset);
   closeAt.start();
 
+
+  ClockObserver openDoorAt(&clock);
+  openDoorAt.at(8, 0, 5, []() {door.open();} );
+  openDoorAt.start();
 
   while(true) {
     loop();

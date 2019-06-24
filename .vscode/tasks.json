@@ -13,7 +13,11 @@
                 "lib/Counter/Counter.cpp",
                 "lib/TimerUtils/TimerUtils.cpp",
                 "lib/Clock/Clock.cpp",
-                "lib/Clock/ClockObserver.cpp"
+                "lib/Clock/ClockObserver.cpp",
+                "lib/arduino/Arduino.cpp",
+                "lib/Devices/GPIO/GPIO.cpp",
+                "lib/Devices/OutputDevice/OutputDevice.cpp",
+                "lib/Devices/Door/Door.cpp"
             ],
             "group": {
                 "kind": "build",
