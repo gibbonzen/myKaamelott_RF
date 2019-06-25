@@ -1,5 +1,6 @@
 #include <iostream>
 #include <windows.h>
+#include <functional>
 
 #include "lib/Counter/Counter.h"
 #include "lib/Clock/Clock.h"
@@ -8,6 +9,7 @@
 #include "lib/Devices/Door/Door.h"
 
 using namespace std;
+using namespace std::placeholders;
 
 Clock clock(8, 0, 0);
 
@@ -46,9 +48,8 @@ int main(int argc, char* argv[]) {
   closeAt.at(8, 0, 10, reset);
   closeAt.start();
 
-
   ClockObserver openDoorAt(&clock);
-  openDoorAt.at(8, 0, 5, []() {door.open();} );
+  openDoorAt.at(8, 0, 5, std::bind(&Door::close, door));
   openDoorAt.start();
 
   while(true) {

@@ -17,7 +17,8 @@
                 "lib/arduino/Arduino.cpp",
                 "lib/Devices/GPIO/GPIO.cpp",
                 "lib/Devices/OutputDevice/OutputDevice.cpp",
-                "lib/Devices/Door/Door.cpp"
+                "lib/Devices/Door/Door.cpp",
+                "-std=c++11"
             ],
             "group": {
                 "kind": "build",
