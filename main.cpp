@@ -4,6 +4,7 @@
 
 #include "lib/Counter/Counter.h"
 #include "lib/Clock/Clock.h"
+#include "lib/Clock/Timer.h"
 #include "lib/Clock/ClockObserver.h"
 
 #include "lib/Devices/Door/Door.h"
@@ -14,8 +15,6 @@ using namespace std::placeholders;
 Clock clock(8, 0, 0);
 
 long lastTime = clock.getTime();
-
-Door door(1);
 
 void loop() {
   // Increment counters
@@ -31,7 +30,7 @@ void loop() {
 }
 
 void display() {
-  cout << "test" << endl;
+  cout << "test display timer" << endl;
 }
 
 void reset() {
@@ -40,17 +39,23 @@ void reset() {
 }
 
 int main(int argc, char* argv[]) {
-  ClockObserver openAt(&clock); // Open at 08:00:05 AM
-  openAt.at(8, 0, 2, display);
-  openAt.start();
+  Timer *timer = new Timer(5000, display);
+  clock.attach(timer);
+  timer->start();
 
-  ClockObserver closeAt(&clock); // Close at 08:00:10
-  closeAt.at(8, 0, 10, reset);
-  closeAt.start();
+  ClockObserver resetAt(&clock); // Reset timer
+  resetAt.at(8, 0, 30, reset);
+  resetAt.start();
 
-  ClockObserver openDoorAt(&clock);
-  openDoorAt.at(8, 0, 5, std::bind(&Door::close, door));
-  openDoorAt.start();
+  Door door(1, 2);
+  ClockObserver *openDoorAt = new ClockObserver(&clock);
+  openDoorAt->at(8, 0, 10, std::bind(&Door::open, door));
+  openDoorAt->start();
+  
+  ClockObserver closeDoorAt(&clock);
+  closeDoorAt.at(8, 0, 20, std::bind(&Door::close, door));
+  closeDoorAt.start();
+
 
   while(true) {
     loop();

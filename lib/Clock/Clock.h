@@ -3,8 +3,9 @@
 
 #include "../TimerUtils/TimerUtils.h"
 #include <vector>
+#include "ClockListener.h"
 
-class ClockObserver;
+// class ClockObserver;
 
 class Clock {
     public:
@@ -12,7 +13,7 @@ class Clock {
         void setTime(int h = 0, int m = 0, int s = 0);
         long getTime(TimerUtils::Unit unit = TimerUtils::MILLISECOND);
         void process();
-        void attach(ClockObserver *obs);
+        void attach(ClockListener *obs);
         void handle();
         void toString();
 
@@ -20,7 +21,7 @@ class Clock {
         int _hCount;
         int _mCount;
         int _sCount;
-        std::vector<ClockObserver*> _observers;
+        std::vector<ClockListener*> _observers;
 };
 
 #endif

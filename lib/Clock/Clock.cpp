@@ -2,10 +2,11 @@
 #include <stdio.h>
 
 #include "Clock.h"
+#include "ClockListener.h"
+
 #include "../TimerUtils/TimerUtils.h"
 #include <vector>
 
-#include "ClockObserver.h"
 
 using namespace std;
 
@@ -50,15 +51,15 @@ void Clock::process() {
     handle();
 }
 
-void Clock::attach(ClockObserver *obs) {
+void Clock::attach(ClockListener *obs) {
     // Add observer
     _observers.push_back(obs);
 }
 
 void Clock::handle() {
     for(int i = 0; i < _observers.size(); i++) {
-        ClockObserver *obs = _observers[i];
-        obs->handle(); // call observer handle method
+        ClockListener *obs = _observers[i];
+        obs->handle(this); // call observer handle method
     }
 }
 

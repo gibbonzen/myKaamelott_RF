@@ -9,15 +9,10 @@ using namespace std;
 using namespace std::placeholders;
 
 ClockObserver::ClockObserver(Clock *clock) {
-  _clock = clock;
   _isHandled = false;
   _handledAt = 0;
 
-  _clock->attach(this);
-}
-
-ClockObserver::~ClockObserver() {
-  delete _clock;
+  clock->attach(this);
 }
 
 void ClockObserver::setID(int id) {
@@ -45,22 +40,22 @@ void ClockObserver::stop() {
   _isStarted = false;
 }
 
-void ClockObserver::handle() {
+void ClockObserver::handle(Clock *clock) {
   // Stopped
   if(!_isStarted) return;
 
   if(_isHandled) {
-    if(_clock->getTime() > _handledAt + 1000) {
+    if(clock->getTime() > _handledAt + 1000) {
       _handledAt = 0;
       _isHandled = false;
     }
     else return;
   }
   
-  if(!_isHandled && _time == _clock->getTime()) {
+  if(!_isHandled && _time == clock->getTime()) {
     _func();
     _isHandled = true;
-    _handledAt = _clock->getTime(); 
+    _handledAt = clock->getTime(); 
   }
 
 }

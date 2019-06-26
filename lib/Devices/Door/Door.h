@@ -1,16 +1,13 @@
 #ifndef Door_h
 #define Door_h
 
-#include "../OutputDevice/OutputDevice.h"
+#include "../OutputDevice/DualOutputDevice.h"
 
-class Door : public OutputDevice {
+class Door : public DualOutputDevice {
   public:
-    Door(int pin);
+    Door(int openPin, int closePin);
     void open();
     void close();
-
-  private:
-
 };
 
 #endif
