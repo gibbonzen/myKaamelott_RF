@@ -1,15 +1,15 @@
 #ifndef Timer_h
 #define Timer_h
 
-#include <functional>
 #include "Clock.h"
 #include "ClockListener.h"
+#include "Callable.h"
 
 class Timer : public ClockListener {
   public:
     Timer(int millis);
-    Timer(int millis, std::function<void()> func);
-    void setCallback(std::function<void()> func);
+    // Timer(int millis, void (*func)(void));
+    void setCallback(void (Callable::*func)(), Callable *obj);
     void start();
     void handle(Clock *clock);
 
@@ -18,7 +18,8 @@ class Timer : public ClockListener {
 
     int _timer;
     unsigned long _count;
-    std::function<void()> _func;
+    void (Callable::* _func)();
+    Callable *_obj;
     bool _isStarted;
 };
 

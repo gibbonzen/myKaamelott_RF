@@ -1,16 +1,17 @@
 #include "Timer.h"
-#include <functional>
+#include "Callable.h"
 
 Timer::Timer(int millis) {
   _timer = millis;
 }
 
-Timer::Timer(int millis, std::function<void()> func): Timer(millis) {
-  setCallback(func);
-}
+// Timer::Timer(int millis, void (*func)(void)): Timer(millis) {
+//   setCallback(func);
+// }
 
-void Timer::setCallback(std::function<void()> func) {
+void Timer::setCallback(void (Callable::*func)(), Callable *obj) {
   _func = func;
+  _obj = obj;
 }
 
 void Timer::start() {
@@ -30,7 +31,7 @@ void Timer::handle(Clock *clock) {
   }
 
   if(clock->getTime() >= _count) {
-    _func();
+    (_obj->*_func)();
     done();
   }
 }

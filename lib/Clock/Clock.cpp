@@ -5,12 +5,12 @@
 #include "ClockListener.h"
 
 #include "../TimerUtils/TimerUtils.h"
-#include <vector>
-
+#include <array>
 
 using namespace std;
 
 Clock::Clock(int h, int m, int s) {
+    _observers = new ClockListener*[3];
     Clock::setTime(h, m, s);
 }
 
@@ -53,11 +53,12 @@ void Clock::process() {
 
 void Clock::attach(ClockListener *obs) {
     // Add observer
-    _observers.push_back(obs);
+    _observers[sizeOf] = obs;
+    sizeOf++;
 }
 
 void Clock::handle() {
-    for(int i = 0; i < _observers.size(); i++) {
+    for(int i = 0; i < sizeOf; i++) {
         ClockListener *obs = _observers[i];
         obs->handle(this); // call observer handle method
     }

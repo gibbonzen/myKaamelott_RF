@@ -2,10 +2,7 @@
 #define Clock_h
 
 #include "../TimerUtils/TimerUtils.h"
-#include <vector>
 #include "ClockListener.h"
-
-// class ClockObserver;
 
 class Clock {
     public:
@@ -21,7 +18,8 @@ class Clock {
         int _hCount;
         int _mCount;
         int _sCount;
-        std::vector<ClockListener*> _observers;
+        ClockListener** _observers = 0;
+        int sizeOf = 0;
 };
 
 #endif

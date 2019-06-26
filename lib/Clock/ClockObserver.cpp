@@ -1,12 +1,6 @@
-#include <functional>
 #include "ClockObserver.h"
 #include "Clock.h"
 #include "../TimerUtils/TimerUtils.h"
-
-#include <iostream>
-
-using namespace std;
-using namespace std::placeholders;
 
 ClockObserver::ClockObserver(Clock *clock) {
   _isHandled = false;
@@ -23,12 +17,12 @@ int ClockObserver::getID() {
   return _id;
 }
 
-void ClockObserver::at(int const& hour, int const& min, int const& sec, std::function<void()> func) {
+void ClockObserver::at(int const& hour, int const& min, int const& sec, void (*func)(void)) {
   _time = TimerUtils::convert(hour, TimerUtils::HOUR) + TimerUtils::convert(min, TimerUtils::MINUTE) +  TimerUtils::convert(sec, TimerUtils::SECOND);
   _func = func;
 }
 
-void ClockObserver::execute(std::function<void()> func) {
+void ClockObserver::execute(void (*func)(void)) {
   func();
 }
 

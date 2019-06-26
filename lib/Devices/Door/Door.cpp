@@ -5,7 +5,6 @@
 #include "../../Clock/Timer.h"
 
 #include <iostream>
-#include <functional>
 
 using namespace std;
 
@@ -17,7 +16,13 @@ Door::Door(int openPin, int closePin) : DualOutputDevice(GPIO(openPin), GPIO(clo
 
 void Door::open() {
   //_g.impulse();  // Deprecated : impulse is blocking
-  _activityTimer->setCallback(std::bind(&GPIO::disable, _g));
+  
+  GPIO *ptr = 0;
+  ptr = &_g;
+
+  auto disable = [ptr] () { ptr->disable(); };
+
+  _activityTimer->setCallback(disable());
   _g.enable();
   _activityTimer->start();
 
@@ -26,7 +31,7 @@ void Door::open() {
 
 void Door::close() {
   // _p.impulse();
-  _activityTimer->setCallback(std::bind(&GPIO::disable, _p));
+  _activityTimer->setCallback([](){_p.disable();});
   _p.enable();
   _activityTimer->start();
 

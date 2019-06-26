@@ -1,6 +1,5 @@
 #include <iostream>
 #include <windows.h>
-#include <functional>
 
 #include "lib/Counter/Counter.h"
 #include "lib/Clock/Clock.h"
@@ -9,10 +8,8 @@
 
 #include "lib/Devices/Door/Door.h"
 
-using namespace std;
-using namespace std::placeholders;
-
 Clock clock(8, 0, 0);
+Door door(1, 2);
 
 long lastTime = clock.getTime();
 
@@ -30,12 +27,16 @@ void loop() {
 }
 
 void display() {
-  cout << "test display timer" << endl;
+  std::cout << "test display timer" << std::endl;
 }
 
 void reset() {
-  cout << "Reset timer" << endl;
+  std::cout << "Reset timer" << std::endl;
   clock.setTime(8);
+}
+
+void openDoor() {
+  door.open();
 }
 
 int main(int argc, char* argv[]) {
@@ -43,16 +44,15 @@ int main(int argc, char* argv[]) {
   resetAt.at(8, 0, 30, reset);
   resetAt.start();
 
-  Door door(1, 2);
   door.attach(&clock);
 
   ClockObserver *openDoorAt = new ClockObserver(&clock);
-  openDoorAt->at(8, 0, 10, std::bind(&Door::open, door));
+  openDoorAt->at(8, 0, 10, openDoor);
   openDoorAt->start();
   
-  ClockObserver closeDoorAt(&clock);
-  closeDoorAt.at(8, 0, 20, std::bind(&Door::close, door));
-  closeDoorAt.start();
+  // ClockObserver closeDoorAt(&clock);
+  // closeDoorAt.at(8, 0, 20, std::bind(&Door::close, door));
+  // closeDoorAt.start();
 
 
   while(true) {
