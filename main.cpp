@@ -39,15 +39,13 @@ void reset() {
 }
 
 int main(int argc, char* argv[]) {
-  Timer *timer = new Timer(5000, display);
-  clock.attach(timer);
-  timer->start();
-
   ClockObserver resetAt(&clock); // Reset timer
   resetAt.at(8, 0, 30, reset);
   resetAt.start();
 
   Door door(1, 2);
+  door.attach(&clock);
+
   ClockObserver *openDoorAt = new ClockObserver(&clock);
   openDoorAt->at(8, 0, 10, std::bind(&Door::open, door));
   openDoorAt->start();

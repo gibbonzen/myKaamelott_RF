@@ -1,8 +1,15 @@
 #include "Timer.h"
 #include <functional>
 
-Timer::Timer(int millis, std::function<void()> func) {
+Timer::Timer(int millis) {
   _timer = millis;
+}
+
+Timer::Timer(int millis, std::function<void()> func): Timer(millis) {
+  setCallback(func);
+}
+
+void Timer::setCallback(std::function<void()> func) {
   _func = func;
 }
 

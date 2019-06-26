@@ -2,6 +2,8 @@
 
 #include "../../arduino/Arduino.h"
 
+#include <iostream>
+
 GPIO::GPIO() {
   _isReady = false;
 }
@@ -16,10 +18,12 @@ void GPIO::setMode(int mode) {
 }
 
 void GPIO::enable() {
+  std::cout << "GPIO n." << _pin << " enabled..." << std::endl; 
  Arduino:: digitalWrite(_pin, HIGH);
 }
 
 void GPIO::disable() {
+  std::cout << "GPIO n." << _pin << " disabled..." << std::endl; 
   Arduino::digitalWrite(_pin, LOW);
 }
 

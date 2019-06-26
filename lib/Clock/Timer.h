@@ -7,7 +7,9 @@
 
 class Timer : public ClockListener {
   public:
+    Timer(int millis);
     Timer(int millis, std::function<void()> func);
+    void setCallback(std::function<void()> func);
     void start();
     void handle(Clock *clock);
 
