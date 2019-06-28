@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 #include <Arduino.h>
-#include "Counter.h"
+//#include "Counter.h"
 
 #define SIMPLE_MULTIPLICATOR 60
 #define SEC_MILLIS_MULTIPLICATOR 1000
