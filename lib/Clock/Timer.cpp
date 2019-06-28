@@ -1,18 +1,15 @@
 #include "Timer.h"
-#include "Callable.h"
+#include "../Devices/GPIO/GPIO.h"
 
 Timer::Timer(int millis) {
   _timer = millis;
 }
 
-// Timer::Timer(int millis, void (*func)(void)): Timer(millis) {
-//   setCallback(func);
-// }
-
-void Timer::setCallback(void (Callable::*func)(), Callable *obj) {
+void Timer::setCallback(void (GPIO::*func)(), GPIO *obj) {
   _func = func;
   _obj = obj;
 }
+
 
 void Timer::start() {
   _isStarted = true;

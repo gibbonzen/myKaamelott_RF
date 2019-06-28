@@ -39,6 +39,10 @@ void openDoor() {
   door.open();
 }
 
+void closeDoor() {
+  door.close();
+}
+
 int main(int argc, char* argv[]) {
   ClockObserver resetAt(&clock); // Reset timer
   resetAt.at(8, 0, 30, reset);
@@ -50,9 +54,9 @@ int main(int argc, char* argv[]) {
   openDoorAt->at(8, 0, 10, openDoor);
   openDoorAt->start();
   
-  // ClockObserver closeDoorAt(&clock);
-  // closeDoorAt.at(8, 0, 20, std::bind(&Door::close, door));
-  // closeDoorAt.start();
+  ClockObserver closeDoorAt(&clock);
+  closeDoorAt.at(8, 0, 20, closeDoor);
+  closeDoorAt.start();
 
 
   while(true) {
