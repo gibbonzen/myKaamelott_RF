@@ -1,5 +1,5 @@
 #include "Timer.h"
-#include "../Devices/GPIO/GPIO.h"
+#include "../GPIO/GPIO.h"
 
 Timer::Timer(int millis) {
   _timer = millis;

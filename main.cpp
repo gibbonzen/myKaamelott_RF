@@ -3,10 +3,10 @@
 
 #include "lib/Counter/Counter.h"
 #include "lib/Clock/Clock.h"
-#include "lib/Clock/Timer.h"
+#include "lib/Timer/Timer.h"
 #include "lib/Clock/ClockObserver.h"
 
-#include "lib/Devices/Door/Door.h"
+#include "lib/Door/Door.h"
 
 Clock clock(8, 0, 0);
 Door door(1, 2);

@@ -1,6 +1,6 @@
 #include "GPIO.h"
 
-#include "../../arduino/Arduino.h"
+#include "../arduino/Arduino.h"
 
 #include <iostream>
 

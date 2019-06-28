@@ -15,12 +15,12 @@
                 "lib/Clock/Clock.cpp",
                 "lib/Clock/ClockListener.h",
                 "lib/Clock/ClockObserver.cpp",
-                "lib/Clock/Timer.cpp",
+                "lib/Timer/Timer.cpp",
                 "lib/arduino/Arduino.cpp",
-                "lib/Devices/GPIO/GPIO.cpp",
-                "lib/Devices/OutputDevice/OutputDevice.cpp",
-                "lib/Devices/OutputDevice/DualOutputDevice.cpp",
-                "lib/Devices/Door/Door.cpp",
+                "lib/GPIO/GPIO.cpp",
+                "lib/OutputDevice/OutputDevice.cpp",
+                "lib/OutputDevice/DualOutputDevice.cpp",
+                "lib/Door/Door.cpp",
                 "-std=c++11"
             ],
             "group": {

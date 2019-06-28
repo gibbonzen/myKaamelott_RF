@@ -2,8 +2,8 @@
 #define Door_h
 
 #include "../OutputDevice/DualOutputDevice.h"
-#include "../../Clock/Clock.h"
-#include "../../Clock/Timer.h"
+#include "../Clock/Clock.h"
+#include "../Timer/Timer.h"
 
 class Door : public DualOutputDevice {
   public:

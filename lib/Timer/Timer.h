@@ -1,9 +1,9 @@
 #ifndef Timer_h
 #define Timer_h
 
-#include "Clock.h"
-#include "ClockListener.h"
-#include "../Devices/GPIO/GPIO.h"
+#include "../Clock/Clock.h"
+#include "../Clock/ClockListener.h"
+#include "../GPIO/GPIO.h"
 
 class Timer : public ClockListener {
   public:
