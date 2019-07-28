@@ -1,10 +1,11 @@
-#include <stdio.h>
 #include "Clock.h"
 #include "ClockListener.h"
 #include "TimerUtils.h"
+#include <Arduino.h>
+#include <stdint.h>
 
 Clock::Clock(int h, int m, int s) {
-    _observers = new ClockListener*[3];
+    _observers = new ClockListener*[5];
     Clock::setTime(h, m, s);
 }
 
@@ -21,21 +22,26 @@ long Clock::getTime(TimerUtils::Unit unit) {
   return hour + min + sec;
 }
 
-void Clock::process() {
-    unsigned long timer = TimerUtils::superMillis();
+bool Clock::isTime(int h, int m, int s) {
+    return h == _hCount && m == _mCount && s == _sCount;
+}
 
-    if(timer % 1000 == 0) { // Each seconds
-        _sCount++;
-    }
+void Clock::process() {
+    _sCount++;
+
+    // if(_millis >= 1000) { // Each seconds
+    //     _millis = 0;        
+    //     _sCount++;
+    // }
 
     if(_sCount >= 60) { // one minute
-        _mCount++;
         _sCount = 0; // reinitiate seconds counter
+        _mCount++;
     }
 
     if(_mCount >= 60) { // one hour
-        _hCount++;
         _mCount = 0;
+        _hCount++;
     }
 
     if(_hCount >= 24) { // one day

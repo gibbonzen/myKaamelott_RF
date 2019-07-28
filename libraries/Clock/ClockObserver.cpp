@@ -1,11 +1,8 @@
 #include "ClockObserver.h"
 #include "Clock.h"
-#include "TimerUtils.h"
+// #include "TimerUtils.h"
 
 ClockObserver::ClockObserver(Clock *clock) {
-  _isHandled = false;
-  _handledAt = 0;
-
   clock->attach(this);
 }
 
@@ -18,7 +15,11 @@ int ClockObserver::getID() {
 }
 
 void ClockObserver::at(int const& hour, int const& min, int const& sec, void (*func)(void)) {
+  _h = hour;
+  _m = min;
+  _s = sec;
   _time = TimerUtils::convert(hour, TimerUtils::HOUR) + TimerUtils::convert(min, TimerUtils::MINUTE) +  TimerUtils::convert(sec, TimerUtils::SECOND);
+
   _func = func;
 }
 
@@ -36,20 +37,14 @@ void ClockObserver::stop() {
 
 void ClockObserver::handle(Clock *clock) {
   // Stopped
-  if(!_isStarted) return;
-
-  if(_isHandled) {
-    if(clock->getTime() > _handledAt + 1000) {
-      _handledAt = 0;
-      _isHandled = false;
-    }
-    else return;
+  if(!_isStarted) {
+    // Serial.println("Observer is not observing...");
+    return;
   }
-  
-  if(!_isHandled && _time == clock->getTime()) {
+
+  if(clock->getTime() == _time) {
+  // if(clock->isTime(_h, _m, _s)) {
     _func();
-    _isHandled = true;
-    _handledAt = clock->getTime(); 
   }
 
 }

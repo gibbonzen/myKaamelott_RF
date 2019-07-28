@@ -1,5 +1,6 @@
 #include "Timer.h"
 #include "GPIO.h"
+// #include <Arduino.h>
 
 Timer::Timer(int millis) {
   _timer = millis;
@@ -9,7 +10,6 @@ void Timer::setCallback(void (GPIO::*func)(), GPIO *obj) {
   _func = func;
   _obj = obj;
 }
-
 
 void Timer::start() {
   _isStarted = true;
@@ -21,13 +21,17 @@ void Timer::done() {
 }
 
 void Timer::handle(Clock *clock) {
-  if(!_isStarted) return;
-  
-  if(_count == 0) {
-    _count = clock->getTime() + _timer;
+  if(!_isStarted) {
+    // Serial.println("Timer is not started...");
+    return;
   }
 
-  if(clock->getTime() >= _count) {
+  long current = clock->getTime();
+  if(_count == 0) {
+    _count = current + _timer;
+  }
+
+  if(current == _count) {
     (_obj->*_func)();
     done();
   }

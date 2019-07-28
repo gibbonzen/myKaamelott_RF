@@ -15,8 +15,8 @@ class Timer : public ClockListener {
   private:
     void done();
 
-    int _timer;
-    unsigned long _count;
+    long _timer;
+    long _count = 0;
     void (GPIO::* _func)();
     GPIO *_obj;
     bool _isStarted;

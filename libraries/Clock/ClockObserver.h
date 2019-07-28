@@ -18,9 +18,10 @@ class ClockObserver : public ClockListener {
   private:
     int _id;
     long _time;
+    int _h;
+    int _m;
+    int _s;
     bool _isStarted;
-    bool _isHandled;
-    unsigned long _handledAt;
     void (*_func)(void);
 };
 
