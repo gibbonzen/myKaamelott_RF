@@ -1,0 +1,14 @@
+/ArduinoJson/**
+/Wifi
+/WifiServer
+/rc-switch
+/TinyWireM
+/RTClib
+/TinyRTClib
+/Manchester
+/WebSockets
+/.vscode
+
+*.zip
+*.7z
+readme.txt
