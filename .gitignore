@@ -7,6 +7,7 @@
 /TinyRTClib
 /Manchester
 /WebSockets
+/Adafruit_Circuit_Playground
 /.vscode
 
 *.zip
