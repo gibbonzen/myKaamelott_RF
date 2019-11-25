@@ -5,53 +5,61 @@
 #include "ClockListener.h"
 #include "GPIO.h"
 
+template<typename T>
 class Timer : public ClockListener {
   public:
-    Timer(unsigned long millis);
-    void setCallback(void (GPIO::*f)(), GPIO *obj);
+    Timer(unsigned long);
+    void setCallback(void (T::*)(), T *);
     void start();
     void stop();
     bool isStarted();
-    void handle(Clock *clock);
+    void handle(Clock*);
 
   private:
     void done();
 
     unsigned long _millis;
     unsigned long _count = 0;
-    void (GPIO::* _func)();
-    GPIO *_obj;
+    void (T::* _func)();
+    T *_obj;
     bool _isStarted = false;
 };
 
-Timer::Timer(unsigned long millis) {
+template<typename T>
+Timer<T>::Timer(unsigned long millis) {
   _millis = millis;
 }
 
-void Timer::setCallback(void (GPIO::*func)(), GPIO *obj) {
+template<typename T>
+void Timer<T>::setCallback(void (T::*func)(), T *obj) {
   _func = func;
   _obj = obj;
 }
 
-void Timer::start() {
+template<typename T>
+void Timer<T>::start() {
   _count = 0;
   _isStarted = true;
 }
 
-void Timer::stop() {
+template<typename T>
+void Timer<T>::stop() {
   _isStarted = false;
 }
 
-bool Timer::isStarted() {
+template<typename T>
+bool Timer<T>::isStarted() {
   return _isStarted;
 }
 
-void Timer::done() {
+template<typename T>
+void Timer<T>::done() {
   _isStarted = false;
   // Serial.println("Timer is done");
 }
 
-void Timer::handle(Clock *clock) {
+template<typename T>
+void Timer<T>::handle(Clock *clock) {
   if(!_isStarted) {
     // Serial.println("Timer is not started...");
     return;

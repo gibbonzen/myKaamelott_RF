@@ -21,7 +21,7 @@ class ClockObserver : public ClockListener {
     int _h;
     int _m;
     int _s;
-    bool _isStarted;
+    bool _isStarted = false;
     bool waiting_ = true;
     void (*_func)(void);
 };

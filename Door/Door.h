@@ -17,7 +17,7 @@ class Door : public DualOutputDevice {
     void onActionPerformed(DoorActionListener*);
 
   private:
-    Timer *_activityTimer = 0;
+    Timer<GPIO> *_activityTimer = 0;
     int size_ = 0;
     void emit(DoorAction);
     DoorActionListener** listeners_;
@@ -75,7 +75,7 @@ void Door::emit(DoorAction action) {
 }
 
 void Door::attach(Clock *clock) {
-  _activityTimer = new Timer(40000);
+  _activityTimer = new Timer<GPIO>(40000);
   clock->attach(_activityTimer);
 }
 

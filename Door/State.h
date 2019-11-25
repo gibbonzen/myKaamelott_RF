@@ -6,7 +6,7 @@ class State {
     State(int);
     void setNext(State*);
     State* getNext();
-    int code();
+    int getCode();
 
   private:
     int code_;
@@ -16,7 +16,7 @@ class State {
 // Impl
 State::State(int code) : code_(code) { }
 
-int State::code() {
+int State::getCode() {
   return code_;
 }
 
@@ -59,6 +59,8 @@ class StateMachine {
     State* getCurrent();
     void next();
     void second();
+    bool in(int*, int);
+
   private:
     State *current_ = 0;
 };
@@ -78,6 +80,14 @@ void StateMachine::next() {
 
 void StateMachine::second() {
   setCurrent(reinterpret_cast<DualState*>(current_));
+}
+
+bool StateMachine::in(int* expected, int size) {
+  for(int i = 0; i < size; i++) {
+    if(expected[i] == getCurrent()->getCode()) 
+      return true;
+  }
+  return false;
 }
 
 #endif
